@@ -1,48 +1,48 @@
 # responses-adapter
 
-Adapter local que expõe API OpenAI-like para usar Groq e MiniMax em endpoint unificado.
+Local adapter that exposes an OpenAI-like API so you can use Groq and MiniMax through a single endpoint.
 
-## O que ele faz
+## What it does
 
 - `POST /v1/responses`
-  - `groq/<model>`: encaminha para `https://api.groq.com/openai/v1/responses`
-  - `minimax/<model>`: converte para `https://api.minimax.io/v1/chat/completions` e normaliza resposta para formato `responses`
+  - `groq/<model>`: forwards to `https://api.groq.com/openai/v1/responses`
+  - `minimax/<model>`: bridges to `https://api.minimax.io/v1/chat/completions` and normalizes output to the `responses` format
 - `POST /v1/chat/completions`
-  - `groq/<model>` e `minimax/<model>` em passthrough
+  - passthrough for `groq/<model>` and `minimax/<model>`
 - `GET /health`
 
-## Pré-requisitos
+## Requirements
 
 - Node.js 20+
 - pnpm
 
-## Configuração
+## Configuration
 
-Copie `.env.example` para `.env` e ajuste:
+Copy `.env.example` to `.env` and set:
 
 - `ADAPTER_API_KEY`
 - `GROQ_API_KEY`
 - `MINIMAX_API_KEY`
-- opcionais: `PORT`, `GROQ_BASE_URL`, `MINIMAX_BASE_URL`
+- optional: `PORT`, `GROQ_BASE_URL`, `MINIMAX_BASE_URL`
 
-## Rodar
+## Run
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
-Servidor padrão: `http://localhost:19090`.
+Default server: `http://localhost:19090`.
 
 ## Auth
 
-Todas as rotas `/v1/*` exigem:
+All `/v1/*` routes require:
 
 ```http
 Authorization: Bearer <ADAPTER_API_KEY>
 ```
 
-## Exemplos
+## Examples
 
 ### Groq via /responses
 
@@ -52,12 +52,12 @@ curl -sS http://localhost:19090/v1/responses \
   -H "Content-Type: application/json" \
   -d '{
     "model": "groq/llama-3.1-8b-instant",
-    "input": "Diga apenas OK",
+    "input": "Say only OK",
     "max_output_tokens": 20
   }'
 ```
 
-### MiniMax via /responses (bridge para chat)
+### MiniMax via /responses (chat bridge)
 
 ```bash
 curl -sS http://localhost:19090/v1/responses \
@@ -65,7 +65,7 @@ curl -sS http://localhost:19090/v1/responses \
   -H "Content-Type: application/json" \
   -d '{
     "model": "minimax/codex-MiniMax-M2.7",
-    "input": "Diga apenas OK",
+    "input": "Say only OK",
     "max_output_tokens": 20
   }'
 ```
@@ -78,21 +78,21 @@ curl -sS http://localhost:19090/v1/chat/completions \
   -H "Content-Type: application/json" \
   -d '{
     "model": "minimax/codex-MiniMax-M2.7",
-    "messages": [{"role":"user","content":"Diga apenas OK"}],
+    "messages": [{"role":"user","content":"Say only OK"}],
     "max_tokens": 20
   }'
 ```
 
-## Observação
+## Note
 
-No cenário atual, MiniMax não expõe `/v1/responses` diretamente. O adapter implementa a ponte para manter contrato compatível com `/v1/responses`.
+MiniMax does not currently provide `/v1/responses` directly. This adapter keeps compatibility by bridging requests to chat completions and converting responses back to the OpenAI Responses shape.
 
-## Compatibilidade Codex CLI
+## Codex CLI compatibility
 
-Relatório de testes: [docs/codex-compatibility-2026-04-13.md](./docs/codex-compatibility-2026-04-13.md)
+Test report: [docs/codex-compatibility-2026-04-13.md](./docs/codex-compatibility-2026-04-13.md)
 
-Resumo rápido:
+Quick summary:
 
-- MiniMax (`minimax/codex-MiniMax-M2.7`) funciona com tools, bash e internet via terminal.
-- Groq via `/responses` funciona com `openai/gpt-oss-120b` e `moonshotai/kimi-k2-instruct(-0905)`.
-- Em MiniMax, a saída frequentemente inclui blocos `<think>...</think>`.
+- MiniMax (`minimax/codex-MiniMax-M2.7`) works with tools, bash commands, and internet access via terminal.
+- Groq via `/responses` works with `openai/gpt-oss-120b` and `moonshotai/kimi-k2-instruct(-0905)`.
+- MiniMax outputs often include `<think>...</think>` blocks.
