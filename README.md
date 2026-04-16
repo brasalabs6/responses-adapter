@@ -149,3 +149,19 @@ When `LANGWATCH_API_KEY` is set, the adapter automatically sends traces to LangW
   - traces are grouped with `langwatch.thread.id` based on the response chain
 
 If `LANGWATCH_API_KEY` is not set, monitoring is disabled and the adapter runs normally.
+
+## Organization Context
+- Organization: `brasalabs6`
+- Repository: `brasalabs6/responses-adapter`
+- Architecture category: `package/service`
+
+## Role in BrasaLabs Architecture
+Owns the OpenAI-compatible /responses adapter for provider interoperability.
+
+## Related Repositories and Packages
+- `brasalabs6/brainstorm` (consumer integrations)
+- `brasalabs6/stack-codex-lb` (runtime ingress/deployment)
+- `brasalabs6/specs` (governance/session memory)
+
+## AGENTS Guidance
+- Repository-local operational rules and contribution constraints are defined in `AGENTS.md`.
