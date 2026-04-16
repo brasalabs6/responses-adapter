@@ -15,12 +15,17 @@ Owns the OpenAI-compatible responses adapter service.
 
 ## Repository-Specific Rules
 - Keep exported interfaces and compatibility notes explicit for downstream consumers.
-- Avoid speculative rules not grounded in package scripts or runtime contracts.
-- Keep README and AGENTS aligned with package/service boundaries.
+- Run package/service build and verification commands relevant to changed docs/instructions.
+- Avoid speculative rules not grounded in repository scripts or runtime contracts.
 
 ## Commands and Validation
 - `pnpm build`
 - `pnpm check`
+
+## Failure Modes
+- BLOCK if required commands/scripts referenced by this file are missing or failing.
+- BLOCK if organization naming or repository ownership statements diverge from README and root governance.
+- BLOCK if changes would reassign ownership boundaries to sibling repositories.
 
 ## What Not To Do
 - Do not copy instructions from unrelated repositories without evidence in this repository.
