@@ -2,6 +2,10 @@
 
 Scope: this file applies to the whole repository unless a deeper `AGENTS.md` overrides it.
 
+## Requirement Language
+
+The key words `MUST`, `MUST NOT`, `REQUIRED`, `SHOULD`, `SHOULD NOT`, `RECOMMENDED`, `NOT RECOMMENDED`, `MAY`, and `OPTIONAL` in this document are to be interpreted as described in BCP 14, RFC 2119, and RFC 8174 when, and only when, they appear in all capitals.
+
 ## Purpose
 Owns the OpenAI-compatible responses adapter service.
 
@@ -28,9 +32,9 @@ Owns the OpenAI-compatible responses adapter service.
 - BLOCK if changes would reassign ownership boundaries to sibling repositories.
 
 ## What Not To Do
-- Do not copy instructions from unrelated repositories without evidence in this repository.
-- Do not claim ownership of sibling repositories or services not listed in this repository README.
-- Do not commit secrets, local env files, or generated runtime artifacts.
+- MUST NOT copy instructions from unrelated repositories without evidence in this repository.
+- MUST NOT claim ownership of sibling repositories or services not listed in this repository README.
+- MUST NOT commit secrets, local env files, or generated runtime artifacts.
 
 ## Related Repositories
 - See `README.md` section `Related Repositories and Packages`.
