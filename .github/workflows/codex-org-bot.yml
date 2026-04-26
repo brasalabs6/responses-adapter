@@ -1,0 +1,40 @@
+name: codex-org-bot
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  issue_comment:
+    types: [created]
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "auto, pr-review, or issue-command"
+        required: false
+        default: auto
+      dry-run:
+        description: "Validate without mutating GitHub"
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  codex:
+    if: ${{ github.event_name != 'issue_comment' || (github.actor != 'brasalabs6-codex' && github.actor != 'brasalabs6-codex[bot]') }}
+    uses: brasalabs6/github-playbook/.github/workflows/codex-org-bot.yml@main
+    with:
+      mode: ${{ github.event.inputs.mode || 'auto' }}
+      github-app-id: ${{ vars.BRASA_CODEX_APP_ID }}
+      project-number: "1"
+      responses-api-endpoint: ${{ vars.OPENAI_RESPONSES_API_ENDPOINT }}
+      openai-base-url: ${{ vars.OPENAI_BASE_URL }}
+      qa-skill-repository: ${{ vars.CODEX_QA_SKILL_REPOSITORY || 'brasalabs6/codex-qa-skill' }}
+      qa-skill-ref: ${{ vars.CODEX_QA_SKILL_REF || 'main' }}
+      qa-allowed-origins: ${{ vars.CODEX_QA_ALLOWED_ORIGINS }}
+      runner-labels: '["self-hosted","linux","x64"]'
+      dry-run: ${{ fromJSON(github.event.inputs['dry-run'] || 'false') }}
+    secrets: inherit
