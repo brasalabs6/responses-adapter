@@ -35,6 +35,6 @@ jobs:
       qa-skill-repository: ${{ vars.CODEX_QA_SKILL_REPOSITORY || 'brasalabs6/codex-qa-skill' }}
       qa-skill-ref: ${{ vars.CODEX_QA_SKILL_REF || 'main' }}
       qa-allowed-origins: ${{ vars.CODEX_QA_ALLOWED_ORIGINS }}
-      runner-labels: '["self-hosted","linux","x64"]'
+      runner-labels: '["self-hosted","Linux","X64","brainstorm","swarm","general"]'
       dry-run: ${{ fromJSON(github.event.inputs['dry-run'] || 'false') }}
     secrets: inherit
