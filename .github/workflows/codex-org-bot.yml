@@ -24,7 +24,7 @@ permissions:
 
 jobs:
   codex:
-    if: ${{ github.event_name != 'issue_comment' || (github.actor != 'brasalabs6-codex' && github.actor != 'brasalabs6-codex[bot]') }}
+    if: ${{ (github.event_name != 'issue_comment' || (github.actor != 'brasalabs6-codex' && github.actor != 'brasalabs6-codex[bot]')) && (github.event_name != 'pull_request' || github.head_ref != 'codex-install-org-bot') }}
     uses: brasalabs6/github-playbook/.github/workflows/codex-org-bot.yml@main
     with:
       mode: ${{ github.event.inputs.mode || 'auto' }}
