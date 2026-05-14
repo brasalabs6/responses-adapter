@@ -2,6 +2,7 @@
   "name": "responses-adapter",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "type": "module",
   "description": "OpenAI-compatible /v1/responses adapter for Groq and MiniMax",
   "scripts": {
