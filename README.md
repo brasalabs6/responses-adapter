@@ -52,7 +52,19 @@ Authorization: Bearer <ADAPTER_API_KEY>
 
 - `langwatch.enabled`
 - `langwatch.endpoint` (when enabled)
+- `providers.available[]` with registered provider ids, model prefixes, and configuration status
 - `responses_store.path`
+
+## Provider Architecture
+
+Provider-specific code lives under `src/providers/`.
+
+- `src/providers/types.ts` defines the `ProviderAdapter` contract.
+- `src/providers/registry.ts` resolves `provider/model` prefixes and builds provider health metadata.
+- `src/providers/groq.ts` owns Groq request mapping and `/responses` passthrough behavior.
+- `src/providers/minimax.ts` owns MiniMax chat bridge behavior and local `previous_response_id` replay.
+
+To add another provider, implement `ProviderAdapter` and register it in `createDefaultProviders()` from `src/providers/index.ts`.
 
 ## Examples
 
